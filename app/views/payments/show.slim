@@ -16,6 +16,7 @@ table
     - Payer.all.each do |payer|
       th
         | #{payer.name}'s Amount
+    th
   - @payment_hash.each do |payment, participants|
     tr
       td
@@ -31,5 +32,7 @@ table
       - participants.values.each do |amount|
         td
            = amount
+      td
+        = link_to "Delete", payment_path(id: payment.id), method: :delete, data: { confirm: "Are you sure?" }
 
 = link_to "Add a payment", new_payment_path

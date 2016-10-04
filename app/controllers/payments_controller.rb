@@ -55,6 +55,16 @@ class PaymentsController < ApplicationController
     end
   end
 
+  def destroy
+    payment = Payment.find(params[:id])
+    if payment.destroy
+      flash[:success] = "Deleted!"
+    else
+      flash[:error] = payment.errors.full_messages.to_sentence
+    end
+    redirect_to root_path and return
+  end
+
   private
 
   def payment_params
