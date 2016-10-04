@@ -33,6 +33,11 @@ class PaymentsController < ApplicationController
         @totals_hash[participant.payment.payer][participant.payer] += participant.amount
       end
     end
+
+    @totals_hash.values.each do |hash|
+      hash.delete_if{|k,v| v == 0}
+    end
+    @totals_hash.delete_if{|k,v| v.empty?}
   end
 
   def new

@@ -1,7 +1,10 @@
-- @totals_hash.each do |payee, payments|
-  - payments.each do |payer, amount|
-    | #{payer.name} owes #{payee.name} #{amount}
-    br
+- if @totals_hash.present?
+  - @totals_hash.each do |payee, payments|
+    - payments.each do |payer, amount|
+      | #{payer.name} owes #{payee.name} #{amount}
+      br
+- else
+  | Everyone is paid up!
 
 table
   tr
