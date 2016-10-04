@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004092852) do
+ActiveRecord::Schema.define(version: 20161004095832) do
+
+  create_table "participants", force: :cascade do |t|
+    t.integer "payer_id"
+    t.integer "payment_id"
+    t.float   "amount",     default: 0.0, null: false
+    t.index ["payer_id"], name: "index_participants_on_payer_id"
+    t.index ["payment_id"], name: "index_participants_on_payment_id"
+  end
 
   create_table "payers", force: :cascade do |t|
     t.string  "name"
