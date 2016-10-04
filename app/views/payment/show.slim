@@ -5,7 +5,10 @@ table
     th Date
     th Payer
     th Payment Type
-  - @payments.each do |payment|
+    - Payer.all.each do |payer|
+      th
+        | #{payer.name}'s Amount
+  - @payment_hash.each do |payment, participants|
     tr
       td
         = payment.name
@@ -17,3 +20,6 @@ table
         = payment.payer_name
       td
         = payment.payment_type
+      - participants.values.each do |amount|
+        td
+           = amount
