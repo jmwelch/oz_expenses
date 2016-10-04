@@ -4,4 +4,10 @@
   = f.input :date_of_payment
   = f.input :payer_id
   = f.input :payment_type
+  = f.simple_fields_for :participants do |builder|
+    = builder.input :payer_id
+    = builder.input :amount
+    = builder.link_to_remove "Remove this participant"
+  = f.link_to_add "Add a participant", :participants
+  br
   = f.submit
