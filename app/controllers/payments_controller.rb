@@ -1,19 +1,9 @@
 class PaymentsController < ApplicationController
-  def show
-    @payment_hash = {}
+  def totals
     payers = Payer.all
     payer_ids = payers.collect{|p| p.id}
-    Payment.includes(:participants).all.each do |payment|
-      @payment_hash.store(payment, Hash.new())
-      payer_ids.each do |id|
-        @payment_hash[payment].store(id, 0)
-      end
-      payment.participants.each do |part|
-        @payment_hash[payment].store(part.payer_id, part.amount)
-      end
-    end
-
     @totals_hash = {}
+
     payers.each do |payer|
       @totals_hash.store(payer, {})
       payers.each do |payee|
@@ -40,8 +30,24 @@ class PaymentsController < ApplicationController
     @totals_hash.delete_if{|k,v| v.empty?}
   end
 
+  def index
+    @payment_hash = {}
+    payers = Payer.all
+    payer_ids = payers.collect{|p| p.id}
+    Payment.includes(:participants).all.each do |payment|
+      @payment_hash.store(payment, Hash.new())
+      payer_ids.each do |id|
+        @payment_hash[payment].store(id, 0)
+      end
+      payment.participants.each do |part|
+        @payment_hash[payment].store(part.payer_id, part.amount)
+      end
+    end
+  end
+
   def new
     @payment = Payment.new
+    @payment_type = params[:payment_type]
   end
 
   def create

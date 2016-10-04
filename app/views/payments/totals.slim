@@ -1,0 +1,15 @@
+h3 Current Debts
+- if @totals_hash.present?
+  - @totals_hash.each do |payee, payments|
+    - payments.each do |payer, amount|
+      | #{payer.name} owes #{payee.name} #{amount}
+      br
+- else
+  | Everyone is paid up!
+
+h3 What would you like to do?
+= link_to "Note a payment", new_payment_path(payment_type: Payment::PURCHASE)
+br
+= link_to "Settle a debt", new_payment_path(payment_type: Payment::SETTLEMENT)
+br
+= link_to "View all payments", payments_path

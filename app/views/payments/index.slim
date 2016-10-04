@@ -1,11 +1,3 @@
-- if @totals_hash.present?
-  - @totals_hash.each do |payee, payments|
-    - payments.each do |payer, amount|
-      | #{payer.name} owes #{payee.name} #{amount}
-      br
-- else
-  | Everyone is paid up!
-
 table
   tr
     th Name
@@ -35,4 +27,4 @@ table
       td
         = link_to "Delete", payment_path(id: payment.id), method: :delete, data: { confirm: "Are you sure?" }
 
-= link_to "Add a payment", new_payment_path
+= link_to "Back to home", root_path

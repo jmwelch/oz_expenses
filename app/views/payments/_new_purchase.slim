@@ -1,0 +1,15 @@
+h3 What did you buy?
+= simple_nested_form_for @payment do |f|
+  = f.input :name, label: "Name of item"
+  = f.input :amount
+  = f.input :date_of_payment
+  = f.input :payer_id, collection: Payer.all, label: "Who made the purchase?"
+  = f.input :payment_type, as: :hidden, input_html: { value: @payment_type }
+  = f.simple_fields_for :participants do |builder|
+    | Let's add other people now
+    = builder.input :payer_id, collection: Payer.all, label: "Who owes money for this purchase?"
+    = builder.input :amount
+    = builder.link_to_remove "Remove this participant"
+  = f.link_to_add "Add a participant", :participants
+  br
+  = f.submit

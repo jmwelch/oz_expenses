@@ -1,15 +1,6 @@
-h3 Let's create a new row!
-= simple_nested_form_for @payment do |f|
-  = f.input :name
-  = f.input :amount
-  = f.input :date_of_payment
-  = f.input :payer_id, collection: Payer.all, hint: "Who made the purchase?"
-  = f.input :payment_type
-  = f.simple_fields_for :participants do |builder|
-    | Let's add other people now
-    = builder.input :payer_id, collection: Payer.all
-    = builder.input :amount, hint: "If someone owes you money, use a positive number. If you are paying someone, use a negative number."
-    = builder.link_to_remove "Remove this participant"
-  = f.link_to_add "Add a participant", :participants
-  br
-  = f.submit
+- if @payment_type == Payment::PURCHASE
+  = render 'new_purchase'
+- elsif @payment_type == Payment::SETTLEMENT
+  = render 'new_settlement'
+- else
+  | Please #{link_to "go back home", root_path} and select a payment option from there

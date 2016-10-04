@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
   resources :payments
 
-  root 'payments#show'
+  root 'payments#totals'
 end
