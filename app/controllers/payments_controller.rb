@@ -21,7 +21,17 @@ class PaymentsController < ApplicationController
       end
     end
     Participant.includes(:payer, payment: :payer).each do |participant|
-      @totals_hash[participant.payment.payer][participant.payer] += participant.amount
+      if @totals_hash[participant.payer][participant.payment.payer] != 0
+        old_amount = @totals_hash[participant.payer][participant.payment.payer]
+        if participant.amount > @totals_hash[participant.payer][participant.payment.payer]
+          @totals_hash[participant.payer][participant.payment.payer] = 0
+          @totals_hash[participant.payment.payer][participant.payer] = participant.amount - old_amount
+        else
+          @totals_hash[participant.payer][participant.payment.payer] = old_amount - participant.amount
+        end
+      else
+        @totals_hash[participant.payment.payer][participant.payer] += participant.amount
+      end
     end
   end
 
