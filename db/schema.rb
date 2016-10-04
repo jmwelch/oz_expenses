@@ -12,12 +12,15 @@
 
 ActiveRecord::Schema.define(version: 20161004095832) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "participants", force: :cascade do |t|
     t.integer "payer_id"
     t.integer "payment_id"
     t.float   "amount",     default: 0.0, null: false
-    t.index ["payer_id"], name: "index_participants_on_payer_id"
-    t.index ["payment_id"], name: "index_participants_on_payment_id"
+    t.index ["payer_id"], name: "index_participants_on_payer_id", using: :btree
+    t.index ["payment_id"], name: "index_participants_on_payment_id", using: :btree
   end
 
   create_table "payers", force: :cascade do |t|
@@ -33,7 +36,7 @@ ActiveRecord::Schema.define(version: 20161004095832) do
     t.string   "payment_type"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.index ["payer_id"], name: "index_payments_on_payer_id"
+    t.index ["payer_id"], name: "index_payments_on_payer_id", using: :btree
   end
 
 end
