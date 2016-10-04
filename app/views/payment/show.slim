@@ -1,0 +1,19 @@
+table
+  tr
+    th Name
+    th Amount
+    th Date
+    th Payer
+    th Payment Type
+  - @payments.each do |payment|
+    tr
+      td
+        = payment.name
+      td
+        = payment.amount
+      td
+        = payment.date_of_payment
+      td
+        = payment.payer_id
+      td
+        = payment.payment_type
