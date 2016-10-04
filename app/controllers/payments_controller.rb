@@ -52,6 +52,9 @@ class PaymentsController < ApplicationController
 
   def create
     payment = Payment.new(payment_params)
+    payment.participants.each do |participant|
+      participant.amount = -participant.amount
+    end if payment.payment_type == Payment::SETTLEMENT
     if payment.save
       flash[:success] = "Created!"
       redirect_to root_path and return

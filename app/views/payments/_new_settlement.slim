@@ -8,7 +8,7 @@ h3 Who are you paying back?
   = f.simple_fields_for :participants do |builder|
     | Time to add yourself
     = builder.input :payer_id, collection: Payer.all, hint: "Hint: this is probably you"
-    = builder.input :amount, lable: "Use a negative value for settlements"
+    = builder.input :amount
     = builder.link_to_remove "Remove this participant"
   = f.link_to_add "Add a participant", :participants
   br
