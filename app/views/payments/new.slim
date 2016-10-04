@@ -1,12 +1,14 @@
+h3 Let's create a new row!
 = simple_nested_form_for @payment do |f|
   = f.input :name
   = f.input :amount
   = f.input :date_of_payment
-  = f.input :payer_id
+  = f.input :payer_id, collection: Payer.all, hint: "Who made the purchase?"
   = f.input :payment_type
   = f.simple_fields_for :participants do |builder|
-    = builder.input :payer_id
-    = builder.input :amount
+    | Let's add other people now
+    = builder.input :payer_id, collection: Payer.all
+    = builder.input :amount, hint: "If someone owes you money, use a positive number. If you are paying someone, use a negative number."
     = builder.link_to_remove "Remove this participant"
   = f.link_to_add "Add a participant", :participants
   br
