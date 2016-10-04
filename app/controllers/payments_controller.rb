@@ -1,7 +1,8 @@
 class PaymentsController < ApplicationController
   def show
     @payment_hash = {}
-    payer_ids = Payer.all.collect{|p| p.id}
+    payers = Payer.all
+    payer_ids = payers.collect{|p| p.id}
     Payment.includes(:participants).all.each do |payment|
       @payment_hash.store(payment, Hash.new())
       payer_ids.each do |id|
@@ -10,6 +11,17 @@ class PaymentsController < ApplicationController
       payment.participants.each do |part|
         @payment_hash[payment].store(part.payer_id, part.amount)
       end
+    end
+
+    @totals_hash = {}
+    payers.each do |payer|
+      @totals_hash.store(payer, {})
+      payers.each do |payee|
+        @totals_hash[payer].store(payee, 0) unless payee == payer
+      end
+    end
+    Participant.includes(:payer, payment: :payer).each do |participant|
+      @totals_hash[participant.payment.payer][participant.payer] += participant.amount
     end
   end
 

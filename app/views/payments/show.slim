@@ -1,3 +1,8 @@
+- @totals_hash.each do |payee, payments|
+  - payments.each do |payer, amount|
+    | #{payer.name} owes #{payee.name} #{amount}
+    br
+
 table
   tr
     th Name
