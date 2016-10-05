@@ -14,7 +14,7 @@ table
       td
         = payment.name
       td
-        = payment.amount
+        = number_to_currency(payment.amount)
       td
         = payment.date_of_payment
       td
@@ -23,7 +23,7 @@ table
         = payment.payment_type
       - participants.values.each do |amount|
         td
-           = amount
+           = number_to_currency(amount) unless amount == 0
       td
         = link_to "Delete", payment_path(id: payment.id), method: :delete, data: { confirm: "Are you sure?" }
 

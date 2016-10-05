@@ -2,7 +2,7 @@ h3 Current Debts
 - if @totals_hash.present?
   - @totals_hash.each do |payee, payments|
     - payments.each do |payer, amount|
-      | #{payer.name} owes #{payee.name} #{amount}
+      | #{payer.name} owes #{payee.name} #{number_to_currency(amount)}
       br
 - else
   | Everyone is paid up!
