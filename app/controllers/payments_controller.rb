@@ -48,6 +48,7 @@ class PaymentsController < ApplicationController
   def new
     @payment = Payment.new
     @payment_type = params[:payment_type]
+    @payment.participants.build
   end
 
   def create
