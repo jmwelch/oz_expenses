@@ -15,4 +15,12 @@ class Payment < ApplicationRecord
     PURCHASE,
     SETTLEMENT
   ].freeze
+
+  def purchase?
+    self.payment_type == PURCHASE
+  end
+
+  def settlement?
+    self.payment_type == SETTLEMENT
+  end
 end

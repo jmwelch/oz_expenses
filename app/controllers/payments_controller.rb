@@ -54,13 +54,13 @@ class PaymentsController < ApplicationController
     payment = Payment.new(payment_params)
     payment.participants.each do |participant|
       participant.amount = -participant.amount
-    end if payment.payment_type == Payment::SETTLEMENT
+    end if payment.settlement?
     if payment.save
-      if payment.payment_type == Payment::PURCHASE
+      if payment.purchase?
         payment.participants.each do |participant|
           UserMailer.purchase_made(participant).deliver_now 
         end
-      elsif payment.payment_type == Payment::SETTLEMENT
+      elsif payment.settlement?
         UserMailer.settlement_made(payment).deliver_now
       end
       flash[:success] = "Created!"

@@ -1,4 +1,4 @@
-table
+table.table
   tr
     th Name
     th Amount
@@ -10,7 +10,7 @@ table
         | #{payer.name}'s Amount
     th
   - @payment_hash.each do |payment, participants|
-    tr
+    tr class="#{'success' if payment.settlement?}"
       td
         = payment.name
       td
