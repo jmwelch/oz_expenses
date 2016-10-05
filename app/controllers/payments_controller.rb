@@ -53,9 +53,10 @@ class PaymentsController < ApplicationController
 
   def create
     payment = Payment.new(payment_params)
-    payment.participants.each do |participant|
-      participant.amount = -participant.amount
-    end if payment.settlement?
+    if payment.settlement?
+      participant = payment.participants.first
+      participant.amount = -payment.amount
+    end
     if payment.save
       if payment.purchase?
         payment.participants.each do |participant|

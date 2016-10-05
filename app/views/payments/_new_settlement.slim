@@ -8,6 +8,5 @@ h3 Who are you paying back?
   = f.simple_fields_for :participants do |builder|
     | Time to add yourself
     = builder.input :payer_id, collection: Payer.all, hint: "Hint: this is probably you"
-    = builder.input :amount, input_html: { value: nil }
   br
   = f.submit
