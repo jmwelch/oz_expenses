@@ -8,7 +8,7 @@ h3 What did you buy?
   = f.simple_fields_for :participants do |builder|
     | Let's add other people now
     = builder.input :payer_id, collection: Payer.all, label: "Who owes money for this purchase?"
-    = builder.input :amount, hint: "How much does this person owe for this purchase?"
+    = builder.input :amount, hint: "How much does this person owe for this purchase?", input_html: { value: nil }
     = builder.link_to_remove "Remove this participant"
   = f.link_to_add "Add a participant", :participants
   br
