@@ -56,6 +56,13 @@ class PaymentsController < ApplicationController
       participant.amount = -participant.amount
     end if payment.payment_type == Payment::SETTLEMENT
     if payment.save
+      if payment.payment_type == Payment::PURCHASE
+        payment.participants.each do |participant|
+          UserMailer.purchase_made(participant).deliver_now 
+        end
+      elsif payment.payment_type == Payment::SETTLEMENT
+        UserMailer.settlement_made(payment).deliver_now
+      end
       flash[:success] = "Created!"
       redirect_to root_path and return
     else
