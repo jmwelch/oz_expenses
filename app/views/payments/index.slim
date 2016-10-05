@@ -1,30 +1,31 @@
-table.table
-  tr
-    th Name
-    th Amount
-    th Date
-    th Payer
-    th Payment Type
-    - Payer.all.each do |payer|
+.table-responsive
+  table.table
+    tr
+      th Name
+      th Amount
+      th Date
+      th Payer
+      th Payment Type
+      - Payer.all.each do |payer|
+        th
+          | #{payer.name}'s Amount
       th
-        | #{payer.name}'s Amount
-    th
-  - @payment_hash.each do |payment, participants|
-    tr class="#{'success' if payment.settlement?}"
-      td
-        = payment.name
-      td
-        = number_to_currency(payment.amount)
-      td
-        = payment.date_of_payment
-      td
-        = payment.payer_name
-      td
-        = payment.payment_type
-      - participants.values.each do |amount|
+    - @payment_hash.each do |payment, participants|
+      tr class="#{'success' if payment.settlement?}"
         td
-           = number_to_currency(amount) unless amount == 0
-      td
-        = link_to "Delete", payment_path(id: payment.id), method: :delete, data: { confirm: "Are you sure?" }
+          = payment.name
+        td
+          = number_to_currency(payment.amount)
+        td
+          = payment.date_of_payment
+        td
+          = payment.payer_name
+        td
+          = payment.payment_type
+        - participants.values.each do |amount|
+          td
+             = number_to_currency(amount) unless amount == 0
+        td
+          = link_to "Delete", payment_path(id: payment.id), method: :delete, data: { confirm: "Are you sure?" }
 
 = link_to "Back to home", root_path
