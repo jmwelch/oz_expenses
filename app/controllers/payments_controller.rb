@@ -75,7 +75,9 @@ class PaymentsController < ApplicationController
 
   def destroy
     payment = Payment.find(params[:id])
+    participants = payment.participants
     if payment.destroy
+      UserMailer.deleted_payment(payment, participants).deliver_now
       flash[:success] = "Deleted!"
     else
       flash[:error] = payment.errors.full_messages.to_sentence
