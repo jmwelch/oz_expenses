@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
   def purchase_made(participant)
     @owed_amount = participant.amount
     @total_amount = participant.payment.amount
-    @purchaser = participant.payer_name
+    @purchaser = participant.payment_payer_name
 
     mail( 
       :to => participant.email,
@@ -15,7 +15,7 @@ class UserMailer < ApplicationMailer
   def settlement_made(payment)
     participant = payment.participants.first
     @paid_amount = -participant.amount
-    @debtor = participant.payer_name
+    @debtor = participant.name
     mail( 
       :to => payment.email,
       :subject => "You've been paid!"

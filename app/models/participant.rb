@@ -3,5 +3,6 @@ class Participant < ApplicationRecord
   belongs_to :payment, inverse_of: :participants
 
   delegate :email, to: :payer
-  delegate :name, to: :payer, prefix: true
+  delegate :payer_name, to: :payment, prefix: true
+  delegate :name, to: :payer
 end
