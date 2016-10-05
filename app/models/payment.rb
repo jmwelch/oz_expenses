@@ -7,6 +7,7 @@ class Payment < ApplicationRecord
   accepts_nested_attributes_for :participants
 
   delegate :name, to: :payer, prefix: true
+  delegate :email, to: :payer
 
   PURCHASE = 'purchase'
   SETTLEMENT = 'settlement'
