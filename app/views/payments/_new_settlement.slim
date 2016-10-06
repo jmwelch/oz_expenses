@@ -9,4 +9,4 @@ h3 Who are you paying back?
     | Time to add yourself
     = builder.input :payer_id, collection: Payer.all, hint: "Hint: this is probably you"
   br
-  = f.submit
+  = f.submit class: 'btn btn-success'

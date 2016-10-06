@@ -5,11 +5,24 @@ h3 What did you buy?
   = f.input :date_of_payment
   = f.input :payer_id, collection: Payer.all, label: "Who made the purchase?"
   = f.input :payment_type, as: :hidden, input_html: { value: @payment_type }
-  = f.simple_fields_for :participants do |builder|
-    | Let's add other people now
+  = f.simple_fields_for :participants, nil, { class: 'foo' } do |builder|
+    .new-participant-as-child
+      | Let's add other people now
     = builder.input :payer_id, collection: Payer.all, label: "Who owes money for this purchase?"
-    = builder.input :amount, hint: "How much does this person owe for this purchase?", input_html: { value: nil }
+    = builder.input :amount, hint: "How much does this person owe for this purchase?", input_html: { value: nil, class: 'participant-amount' }
     = builder.link_to_remove "Remove this participant"
   = f.link_to_add "Add a participant", :participants
   br
-  = f.submit
+  br
+  = link_to 'Split amount evenly', '#', remote: true, id: 'split-purchase', class: 'btn btn-info m-r-sm'
+  = f.submit class: 'btn btn-success'
+
+javascript:
+  $('#split-purchase').on('click', function() {
+    var ways = $('.new-participant-as-child').length + 1;
+    if (ways > 0) {
+      var payment = $('#payment_amount').val() / ways;
+      $('.participant-amount').val(payment.toFixed(2));
+      $('#payment_amount').val(parseFloat($('#payment_amount').val()).toFixed(2));
+    }
+  });
