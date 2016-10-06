@@ -6,6 +6,7 @@ class UserMailer < ApplicationMailer
     @owed_amount = participant.amount
     @total_amount = participant.payment.amount
     @purchaser = participant.payment_payer_name
+    @item = participant.payment.name
 
     mail(
       :to => participant.email,
