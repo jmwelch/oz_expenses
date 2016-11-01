@@ -34,7 +34,7 @@ class PaymentsController < ApplicationController
     @payment_hash = {}
     payers = Payer.all
     payer_ids = payers.collect{|p| p.id}
-    Payment.includes(:participants).all.each do |payment|
+    Payment.includes(:participants).order('created_at desc').each do |payment|
       @payment_hash.store(payment, Hash.new())
       payer_ids.each do |id|
         @payment_hash[payment].store(id, 0)
